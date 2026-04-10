@@ -1,0 +1,142 @@
+#!/usr/bin/env python3
+"""Scatter: mean continuation output tokens vs. CFR (correct flip rate), 8 models."""
+
+from __future__ import annotations
+
+import argparse
+from pathlib import Path
+
+import matplotlib
+import matplotlib.pyplot as plt
+
+from scatter_common import (
+    DEFAULT_BENCH_JSONL,
+    FAMILY_STYLE,
+    MANUAL_OFFSETS_TOKEN,
+    MODELS,
+    load_mean_output_tokens,
+    unweighted_mean_cfr_seven_subsets,
+)
+
+matplotlib.rcParams.update({
+    "font.family": "serif",
+    "mathtext.fontset": "cm",
+    "axes.unicode_minus": False,
+})
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser()
+    ap.add_argument(
+        "--experiments",
+        type=Path,
+        default=Path(__file__).resolve().parent.parent / "Experiments",
+    )
+    ap.add_argument(
+        "-o",
+        "--out",
+        type=Path,
+        default=Path(__file__).resolve().parent / "token_scatter",
+    )
+    ap.add_argument(
+        "--bench",
+        type=Path,
+        default=DEFAULT_BENCH_JSONL,
+        help="tele_resilience_bench.jsonl (gold/base indices for subset CFR)",
+    )
+    args = ap.parse_args()
+
+    pts: list[tuple[str, str, str, float, float]] = []
+    for fam, param_lab, sub in MODELS:
+        mean_tok = load_mean_output_tokens(args.experiments, sub)
+        cfr_pct = unweighted_mean_cfr_seven_subsets(
+            args.experiments, sub, args.bench
+        )
+        if mean_tok is None or cfr_pct is None:
+            continue
+        pts.append((fam, param_lab, sub, mean_tok, cfr_pct))
+
+    fig, ax = plt.subplots(figsize=(4.5, 3.2))
+    # Match VRAM scatter: horizontal legend above axes
+    fig.subplots_adjust(left=0.16, right=0.96, bottom=0.17, top=0.86)
+
+    seen: set[str] = set()
+    for fam, param_lab, sub, x, y in pts:
+        sty = FAMILY_STYLE[fam]
+        ax.scatter(
+            x, y,
+            s=90,
+            c=sty["color"],
+            marker=sty["marker"],
+            edgecolors="white",
+            linewidths=0.6,
+            zorder=6,
+            label=sty["label"] if fam not in seen else None,
+        )
+        seen.add(fam)
+
+        dx, dy, ha, va = MANUAL_OFFSETS_TOKEN[sub]
+        ax.annotate(
+            param_lab,
+            xy=(x, y),
+            xytext=(dx, dy),
+            textcoords="offset points",
+            fontsize=12,
+            fontweight="bold",
+            color=sty["color"],
+            ha=ha,
+            va=va,
+            arrowprops={
+                "arrowstyle": "-",
+                "color": "#9e9e9e",
+                "lw": 0.5,
+                "shrinkA": 0,
+                "shrinkB": 4,
+            },
+            zorder=7,
+        )
+
+    for spine in ax.spines.values():
+        spine.set_linewidth(0.6)
+        spine.set_color("#333333")
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+
+    ax.set_xlim(190, 540)
+    ys = [p[4] for p in pts]
+    y_pad = max((max(ys) - min(ys)) * 0.12, 1.5)
+    ax.set_ylim(min(ys) - y_pad, max(ys) + y_pad)
+
+    ax.set_xlabel("Mean Output Tokens", fontsize=14, labelpad=6)
+    ax.set_ylabel("CFR (%)", fontsize=14, labelpad=6)
+    ax.tick_params(axis="both", which="major", labelsize=12, width=0.6,
+                   length=4, direction="out", colors="#333333")
+    ax.grid(axis="both", linestyle="--", linewidth=0.4, alpha=0.5, color="#bdbdbd")
+    ax.set_axisbelow(True)
+
+    leg = ax.legend(
+        ncol=3,
+        fontsize=10,
+        frameon=True,
+        edgecolor="#cccccc",
+        fancybox=False,
+        framealpha=1.0,
+        borderpad=0.45,
+        handletextpad=0.35,
+        columnspacing=1.0,
+        loc="lower center",
+        bbox_to_anchor=(0.5, 1.02),
+        bbox_transform=ax.transAxes,
+    )
+    leg.set_zorder(4)
+    leg.get_frame().set_linewidth(0.5)
+
+    out = args.out
+    out.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(f"{out}.pdf", bbox_inches="tight", pad_inches=0.04)
+    fig.savefig(f"{out}.png", dpi=300, bbox_inches="tight", pad_inches=0.04)
+    plt.close(fig)
+
+
+if __name__ == "__main__":
+    main()

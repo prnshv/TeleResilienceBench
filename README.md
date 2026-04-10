@@ -73,6 +73,29 @@ python scripts/03_report.py \
   --artifacts-dir out/report/
 ```
 
+## LaTeX main table + efficiency plots (`Graphs/`)
+
+**Subset flip-rate table (LaTeX):** from the repo root, with `data/tele_resilience_bench.jsonl` and `Experiments/<model>/main.jsonl` in place:
+
+```bash
+python main_table.py \
+  --bench data/tele_resilience_bench.jsonl \
+  --experiments Experiments \
+  -o Experiments/main_table.tex
+```
+
+Per-subset CFR/NF/WF match `main_table.py` (gold/base indices from the bench file). **Macro Average** is the **unweighted mean** of the **seven** MC subset percentages (TeleQnA, TeleTables, TeleLogs, 3GPP\_TSG, ORANBench, srsRANBench, SixG\_Bench)—the same aggregation as the scatter plots below.
+
+**Efficiency scatter figures** (mean continuation tokens vs CFR, and VRAM usage % vs CFR for the eight continuation models under `Experiments/`):
+
+```bash
+source .venv/bin/activate
+python Graphs/token_scatter.py    # → Graphs/token_scatter.png + .pdf
+python Graphs/vram_scatter.py     # → Graphs/VRAM_scatter.png + .pdf
+```
+
+Shared model list, per-model VRAM (GB), label offsets, and seven-subset CFR logic live in `Graphs/scatter_common.py`. Optional: `--bench` (default `data/tele_resilience_bench.jsonl`), `--experiments`, `--ref-vram-gb` on `vram_scatter.py`.
+
 ---
 
 ## Release artifacts (from this ot-lite run)
@@ -139,5 +162,8 @@ Fields are abbreviated for display; `half_reasoning_trace` is much longer on dis
 - `src/` — GSMA loading, Ollama client, parsing / half-trace helpers  
 - `scripts/` — collect, eval, report, `export_release_benchmarks.py`  
 - `data/` — `tele_resilience_bench.jsonl`, `final_benchmark.json`, `AuxiliaryBenchmark.json`  
+- `Experiments/` — per-model `main.json` / `main.jsonl` and generated `main_table.tex`  
+- `Graphs/` — `token_scatter.py`, `vram_scatter.py`, `scatter_common.py`, exported `.png` / `.pdf` figures  
+- `main_table.py` — build LaTeX CFR/NF/WF table from bench + `Experiments/*/main.jsonl`  
 - `out/eval/`, `out/report/` — optional local outputs from eval + `03_report.py` (gitignored)  
 - `configs/models.yaml` — continuation model tags  

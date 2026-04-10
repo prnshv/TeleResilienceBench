@@ -18,6 +18,8 @@ DEFAULT_OUT = DEFAULT_EXP / "main_table.tex"
 
 TIER1_KEYS = ("teleqna", "teletables", "telelogs", "3gpp_tsg")
 TIER2_KEYS = ("oranbench", "srsranbench", "sixg_bench")
+# All seven MC sub-benchmarks (tier-1 + tier-2); macro column = unweighted mean over these.
+ALL_MC_SUBSETS: tuple[str, ...] = TIER1_KEYS + TIER2_KEYS
 
 # (LaTeX family cell, size cell, experiments subdirectory name)
 MODEL_ROWS: list[tuple[str, str, str]] = [
@@ -90,7 +92,7 @@ def pct(count: int, denom: int) -> str:
 def macro_triplets(
     cells: list[tuple[str, str, str]],
 ) -> tuple[str, str, str]:
-    """Unweighted mean of three (CFR, NF, WF) percentage strings."""
+    """Unweighted mean of (CFR, NF, WF) percentage strings across all given subset cells."""
     vals: list[tuple[float, float, float]] = []
     for a, b, c in cells:
         if a == "-" or b == "-" or c == "-":
@@ -165,7 +167,8 @@ def build_tex(bench: dict[str, dict[str, Any]], exp_dir: Path) -> str:
 
             c1 = model_row_cells(lines, bench, TIER1_KEYS)
             c2 = model_row_cells(lines, bench, TIER2_KEYS)
-            m = macro_triplets(c2)
+            c_all = model_row_cells(lines, bench, ALL_MC_SUBSETS)
+            m = macro_triplets(c_all)
             t1s = " & ".join(f"{a} & {b} & {c}" for a, b, c in c1)
             t2s = " & ".join(f"{a} & {b} & {c}" for a, b, c in c2)
             t2m = f"{m[0]} & {m[1]} & {m[2]}"
@@ -191,7 +194,7 @@ def build_tex(bench: dict[str, dict[str, Any]], exp_dir: Path) -> str:
         [
             r"\begin{table*}[h]",
             r"    \centering",
-            r"    \caption{Reasoning Resilience across 7 discrete-choice GSMA sub-benchmarks. We report the Correct Flip Rate (CFR), No Flip (NF), and Wrong Flip (WF) percentages for each model.}",
+            r"    \caption{Reasoning Resilience across 7 discrete-choice GSMA sub-benchmarks. We report the Correct Flip Rate (CFR), No Flip (NF), and Wrong Flip (WF) percentages for each model. Macro Average is the unweighted mean of the seven subset percentages (each subset weighted equally, not by sample count).}",
             r"    \label{tab:flip_rates}",
             r"",
             r"    \resizebox{\linewidth}{!}{%",
