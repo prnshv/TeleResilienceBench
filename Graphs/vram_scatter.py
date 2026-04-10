@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt
 from scatter_common import (
     DEFAULT_BENCH_JSONL,
     FAMILY_STYLE,
+    FIG_GRID_MAJOR_KW,
     MANUAL_OFFSETS_VRAM,
     MODELS,
     REFERENCE_VRAM_GB,
@@ -121,7 +122,7 @@ def main() -> None:
     ax.set_ylabel("CFR (%)", fontsize=14, labelpad=6)
     ax.tick_params(axis="both", which="major", labelsize=12, width=0.6,
                    length=4, direction="out", colors="#333333")
-    ax.grid(axis="both", linestyle="--", linewidth=0.4, alpha=0.5, color="#bdbdbd")
+    ax.grid(which="major", axis="both", zorder=0, **FIG_GRID_MAJOR_KW)
     ax.set_axisbelow(True)
 
     leg = ax.legend(

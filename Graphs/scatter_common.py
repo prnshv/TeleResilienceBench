@@ -32,10 +32,19 @@ MODELS: list[tuple[str, str, str]] = [
     ("nemotron", "4B", "nemotron-3-nano_4b"),
 ]
 
+# Muted family colors (easier on the eyes than saturated primaries; shared by all Graphs/*.py).
 FAMILY_STYLE: dict[str, dict] = {
-    "qwen": {"color": "#1565C0", "marker": "o", "label": "Qwen 3.5"},
-    "gemma": {"color": "#2E7D32", "marker": "s", "label": "Gemma 4"},
-    "nemotron": {"color": "#E65100", "marker": "D", "label": "Nemotron-3"},
+    "qwen": {"color": "#5F8FB8", "marker": "o", "label": "Qwen 3.5"},
+    "gemma": {"color": "#6FA080", "marker": "s", "label": "Gemma 4"},
+    "nemotron": {"color": "#CF9568", "marker": "D", "label": "Nemotron-3"},
+}
+
+# Major grid (token/VRAM scatters + harmonized with aux_graph bar chart).
+FIG_GRID_MAJOR_KW: dict[str, Any] = {
+    "linestyle": (0, (4, 3)),
+    "linewidth": 0.45,
+    "alpha": 0.38,
+    "color": "#a8adb3",
 }
 
 # Peak VRAM (GB) per run for continuation eval (user-provided).
