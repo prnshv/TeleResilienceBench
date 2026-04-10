@@ -1,7 +1,7 @@
 .venv/
 __pycache__/
 *.pyc
-# Keep generated per-run result traces out of git unless you intentionally add them.
-results/*.jsonl
+# Generated eval + report outputs (see README `out/eval`, `out/report`).
+out/
 logs/
 .pytest_cache/

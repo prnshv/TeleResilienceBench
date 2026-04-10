@@ -61,16 +61,16 @@ python3 scripts/export_release_benchmarks.py
 python scripts/02_eval_continuation.py \
   --bench data/tele_resilience_bench.jsonl \
   --models-config configs/models.yaml \
-  --output-dir results/
+  --output-dir out/eval/
 ```
 
 ## 3. Report
 
 ```bash
 python scripts/03_report.py \
-  --summary results/summary.json \
+  --summary out/eval/summary.json \
   --models-config configs/models.yaml \
-  --artifacts-dir artifacts/
+  --artifacts-dir out/report/
 ```
 
 ---
@@ -139,5 +139,5 @@ Fields are abbreviated for display; `half_reasoning_trace` is much longer on dis
 - `src/` — GSMA loading, Ollama client, parsing / half-trace helpers  
 - `scripts/` — collect, eval, report, `export_release_benchmarks.py`  
 - `data/` — `tele_resilience_bench.jsonl`, `final_benchmark.json`, `AuxiliaryBenchmark.json`  
-- `results/` — eval outputs  
+- `out/eval/`, `out/report/` — optional local outputs from eval + `03_report.py` (gitignored)  
 - `configs/models.yaml` — continuation model tags  

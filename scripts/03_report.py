@@ -96,9 +96,9 @@ def plot_bars(
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Tables and charts from continuation summary.")
-    parser.add_argument("--summary", type=Path, default=ROOT / "results" / "summary.json")
+    parser.add_argument("--summary", type=Path, default=ROOT / "out" / "eval" / "summary.json")
     parser.add_argument("--models-config", type=Path, default=ROOT / "configs" / "models.yaml")
-    parser.add_argument("--artifacts-dir", type=Path, default=ROOT / "artifacts")
+    parser.add_argument("--artifacts-dir", type=Path, default=ROOT / "out" / "report")
     args = parser.parse_args()
 
     data = load_summary(args.summary)
