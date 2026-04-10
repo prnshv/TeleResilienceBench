@@ -1,0 +1,22 @@
+# Ollama model tags for continuation eval + nominal parameter size (billions) for VRAM proxy charts.
+# Edit tags to match `ollama list` on your machine.
+
+models:
+  - tag: nemotron-3-nano:4b
+    params_b: 4.0
+  - tag: qwen3.5:0.8b
+    params_b: 0.8
+  - tag: qwen3.5:4b
+    params_b: 4.0
+  - tag: qwen3.5:9b
+    params_b: 9.0
+  - tag: qwen3.5:27b
+    params_b: 27.0
+  - tag: gemma4:e2b
+    params_b: 2.0
+  - tag: gemma4:e4b
+    params_b: 4.0
+  - tag: gemma4:26b
+    params_b: 26.0
+  - tag: gemma4:31b
+    params_b: 31.0

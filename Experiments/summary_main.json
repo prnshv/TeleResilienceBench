@@ -1,0 +1,77 @@
+{
+  "bench_file": "data/final_benchmark.json",
+  "experiment_artifact": "main",
+  "num_bench_rows": 818,
+  "ollama_num_ctx": 2048,
+  "ollama_think": true,
+  "models": {
+    "gemma4:26b": {
+      "model": "gemma4:26b",
+      "n": 818,
+      "correct_flips": 223,
+      "correct_flip_rate": 0.2726161369193154,
+      "parse_failures": 20,
+      "parse_failure_rate": 0.02444987775061125,
+      "still_wrong": 575,
+      "mean_prompt_tokens": 1871.0134638922889,
+      "mean_output_tokens": 376.6793145654835,
+      "mean_total_tokens": 2247.6927784577724,
+      "by_subset": {
+        "3gpp_tsg": {
+          "n": 90,
+          "correct_flips": 15,
+          "correct_flip_rate": 0.16666666666666666,
+          "parse_failures": 11,
+          "still_wrong": 64
+        },
+        "oranbench": {
+          "n": 63,
+          "correct_flips": 21,
+          "correct_flip_rate": 0.3333333333333333,
+          "parse_failures": 0,
+          "still_wrong": 42
+        },
+        "sixg_bench": {
+          "n": 97,
+          "correct_flips": 31,
+          "correct_flip_rate": 0.31958762886597936,
+          "parse_failures": 2,
+          "still_wrong": 64
+        },
+        "srsranbench": {
+          "n": 47,
+          "correct_flips": 21,
+          "correct_flip_rate": 0.44680851063829785,
+          "parse_failures": 1,
+          "still_wrong": 25
+        },
+        "telelogs": {
+          "n": 86,
+          "correct_flips": 13,
+          "correct_flip_rate": 0.1511627906976744,
+          "parse_failures": 1,
+          "still_wrong": 72
+        },
+        "teleqna": {
+          "n": 359,
+          "correct_flips": 108,
+          "correct_flip_rate": 0.3008356545961003,
+          "parse_failures": 4,
+          "still_wrong": 247
+        },
+        "teletables": {
+          "n": 76,
+          "correct_flips": 14,
+          "correct_flip_rate": 0.18421052631578946,
+          "parse_failures": 1,
+          "still_wrong": 61
+        }
+      },
+      "params_b": null,
+      "think": true,
+      "output_jsonl": "/home/prgajjar/TeleResilienceBench/Experiments/gemma4_26b/main.jsonl",
+      "telemath_rel_tol": 0.001,
+      "telemath_abs_tol": 1e-05
+    }
+  }
+}

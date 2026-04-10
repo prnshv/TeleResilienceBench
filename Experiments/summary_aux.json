@@ -1,0 +1,35 @@
+{
+  "bench_file": "data/AuxiliaryBenchmark.json",
+  "experiment_artifact": "aux",
+  "num_bench_rows": 77,
+  "ollama_num_ctx": 2048,
+  "ollama_think": true,
+  "models": {
+    "gemma4:26b": {
+      "model": "gemma4:26b",
+      "n": 77,
+      "correct_flips": 8,
+      "correct_flip_rate": 0.1038961038961039,
+      "parse_failures": 1,
+      "parse_failure_rate": 0.012987012987012988,
+      "still_wrong": 68,
+      "mean_prompt_tokens": 1879.7792207792209,
+      "mean_output_tokens": 498.85714285714283,
+      "mean_total_tokens": 2378.6363636363635,
+      "by_subset": {
+        "telemath": {
+          "n": 77,
+          "correct_flips": 8,
+          "correct_flip_rate": 0.1038961038961039,
+          "parse_failures": 1,
+          "still_wrong": 68
+        }
+      },
+      "params_b": null,
+      "think": true,
+      "output_jsonl": "/home/prgajjar/TeleResilienceBench/Experiments/gemma4_26b/aux.jsonl",
+      "telemath_rel_tol": 0.001,
+      "telemath_abs_tol": 1e-05
+    }
+  }
+}

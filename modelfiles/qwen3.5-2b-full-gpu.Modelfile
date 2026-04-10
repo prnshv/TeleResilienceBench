@@ -1,0 +1,10 @@
+# Optional: bake full GPU offload into a local model name.
+# Build:  ollama create qwen3.5:2b-gpu99 -f modelfiles/qwen3.5-2b-full-gpu.Modelfile
+# Run:    use --base-model qwen3.5:2b-gpu99 in 01_collect_base_traces.py
+#
+# `99` is the usual llama.cpp/Ollama sentinel for “all layers on GPU” (not literally 99 layers).
+
+FROM qwen3.5:2b
+
+PARAMETER num_gpu 99
+PARAMETER num_ctx 2048
