@@ -73,7 +73,7 @@ python scripts/03_report.py \
   --artifacts-dir out/report/
 ```
 
-## LaTeX main table + efficiency plots (`Graphs/`)
+## Primary Results + Efficiency Plots
 
 **Subset flip-rate table (LaTeX):** from the repo root, with `data/tele_resilience_bench.jsonl` and `Experiments/<model>/main.jsonl` in place:
 
@@ -98,9 +98,9 @@ Shared model list, per-model VRAM (GB), label offsets, and seven-subset CFR logi
 
 ---
 
-## Release artifacts (from this ot-lite run)
-
-The full collector output is **`data/tele_resilience_bench.jsonl`**. From it we ship two JSON files (regenerate with `scripts/export_release_benchmarks.py` after a new collection):
+## Released artifacts
+The benchmark dataset is publicly available on Hugging Face at **[prnshv/TeleResilienceBench](https://huggingface.co/datasets/prnshv/TeleResilienceBench)**
+Locally, the full collector output is data/tele_resilience_bench.jsonl. From it we ship two JSON files:
 
 | Artifact | Description | Samples |
 |----------|-------------|--------:|
