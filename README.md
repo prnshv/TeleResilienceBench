@@ -2,7 +2,7 @@
 
 Resilience benchmark built from **[GSMA/ot-lite](https://huggingface.co/datasets/GSMA/ot-lite)** on Hugging Face. The pipeline runs a base model on the **test split**, keeps only **wrong but parseable** answers, **halves** the reasoning trace, then (optionally) evaluates whether continuation models **flip** to the correct answer.
 
-All subsets below are loaded from **ot-lite** (not ot-full). `sample_id` values use an **`ot-lite:`** prefix.
+All subsets below are loaded from **ot-lite**. `sample_id` values use an **`ot-lite:`** prefix.
 
 ## Subsets (ot-lite)
 
